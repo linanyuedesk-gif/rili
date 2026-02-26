@@ -1,4 +1,4 @@
-name: Android Build
+name: Android Release Build
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-release:
 
     runs-on: ubuntu-latest
 
@@ -26,11 +26,16 @@ jobs:
       with:
         gradle-version: '8.5'
 
-    - name: Build with Gradle
-      run: gradle assembleDebug
+    - name: Build release with Gradle
+      run: gradle assembleRelease
 
-    - name: Upload APK
+    - name: Rename release APK to week.apk
+      run: |
+        cd app/build/outputs/apk/release
+        mv app-release.apk week.apk
+
+    - name: Upload week.apk
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        name: week.apk
+        path: app/build/outputs/apk/release/week.apk
