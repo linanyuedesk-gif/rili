@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FF121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一行周历 - 应用绑定"
+            android:textColor="#FFFFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="为每一天选择要启动的应用："
+            android:textColor="#CCFFFFFF"
+            android:textSize="14sp"
+            android:paddingBottom="16dp" />
+
+        <!-- Monday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_mon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周一：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_mon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Tuesday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_tue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周二：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_tue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Wednesday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_wed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周三：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_wed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Thursday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_thu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周四：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_thu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Friday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_fri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周五：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_fri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Saturday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_sat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="周六：未配置"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_sat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择应用" />
+        </LinearLayout>
+
+        <!-- Sunday -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp">
+
+            <TextView
+                android:id="@+id/tv_app_sun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+            android:text="周日：未配置"
+            android:textColor="#FFFFFFFF"
+            android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_pick_sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+            android:text="选择应用" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tv_style_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前样式：内置样式 1，字体：默认"
+            android:textColor="#FFFFFFFF"
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <Button
+                android:id="@+id/btn_pick_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="选择内置样式" />
+
+            <Button
+                android:id="@+id/btn_pick_font"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="选择字体" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义样式（使用 #AARRGGBB 颜色值）："
+            android:textColor="#CCFFFFFF"
+            android:textSize="13sp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="背景颜色"
+            android:textColor="#99FFFFFF"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_bg_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="#E6222222"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#66FFFFFF"
+            android:inputType="text"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前日期：数字颜色 / 星期颜色"
+            android:textColor="#99FFFFFF"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_today_date_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#FFFFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_today_week_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#FFFFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="过去日期：数字颜色 / 星期颜色"
+            android:textColor="#99FFFFFF"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_past_date_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#99FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_past_week_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#66FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="未来日期：数字颜色 / 星期颜色"
+            android:textColor="#99FFFFFF"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_future_date_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#CCFFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/et_future_week_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="#99FFFFFF"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="text"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_apply_custom_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="应用自定义样式"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="完成"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>
+

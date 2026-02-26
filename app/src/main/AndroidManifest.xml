@@ -12,10 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true"
-        android:largeHeap="true"
+        android:largeHeap="false"
         android:installLocation="internalOnly"
-        android:requestLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="false"
         tools:targetApi="31">
+        
+        <activity
+            android:name=".AppConfigActivity"
+            android:exported="false" />
         
         <receiver
             android:name=".WeekCalendarWidgetProvider"
