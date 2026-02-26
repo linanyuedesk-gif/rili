@@ -186,47 +186,56 @@ public class AppConfigActivity extends AppCompatActivity {
 
     private void showAppPicker(int dayIndex) {
         PackageManager pm = getPackageManager();
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        List<ResolveInfo> apps = pm.queryIntentActivities(mainIntent, 0);
-        if (apps == null) {
-            apps = new ArrayList<>();
+        List<android.content.pm.ApplicationInfo> installedApps =
+                pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        if (installedApps == null) {
+            installedApps = new ArrayList<>();
         }
-
-        Collections.sort(apps, new Comparator<ResolveInfo>() {
-            @Override
-            public int compare(ResolveInfo a, ResolveInfo b) {
-                CharSequence la = a.loadLabel(pm);
-                CharSequence lb = b.loadLabel(pm);
-                if (la == null) la = "";
-                if (lb == null) lb = "";
-                return la.toString().compareToIgnoreCase(lb.toString());
-            }
-        });
 
         final List<ActivityInfo> activities = new ArrayList<>();
         final List<String> labels = new ArrayList<>();
 
-        for (ResolveInfo info : apps) {
-            ActivityInfo ai = info.activityInfo;
-            if (ai != null) {
-                activities.add(ai);
-                CharSequence label = info.loadLabel(pm);
-                if (label == null) {
-                    label = ai.packageName;
-                }
-                labels.add(label.toString());
+        for (android.content.pm.ApplicationInfo appInfo : installedApps) {
+            Intent launchIntent = pm.getLaunchIntentForPackage(appInfo.packageName);
+            if (launchIntent == null) {
+                continue; // 没有可启动入口，跳过
             }
+            ResolveInfo resolveInfo = pm.resolveActivity(launchIntent, 0);
+            if (resolveInfo == null || resolveInfo.activityInfo == null) {
+                continue;
+            }
+            ActivityInfo ai = resolveInfo.activityInfo;
+            activities.add(ai);
+
+            CharSequence labelCs = pm.getApplicationLabel(appInfo);
+            if (labelCs == null) {
+                labelCs = appInfo.packageName;
+            }
+            labels.add(labelCs.toString());
+        }
+
+        // 按名称排序
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < labels.size(); i++) {
+            indices.add(i);
+        }
+        Collections.sort(indices, (a, b) -> labels.get(a).compareToIgnoreCase(labels.get(b)));
+
+        final List<ActivityInfo> sortedActivities = new ArrayList<>();
+        final List<String> sortedLabels = new ArrayList<>();
+        for (int idx : indices) {
+            sortedActivities.add(activities.get(idx));
+            sortedLabels.add(labels.get(idx));
         }
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setTitle("选择应用");
-        builder.setItems(labels.toArray(new String[0]), (dialog, which) -> {
-            ActivityInfo ai = activities.get(which);
+        builder.setItems(sortedLabels.toArray(new String[0]), (dialog, which) -> {
+            ActivityInfo ai = sortedActivities.get(which);
             String pkg = ai.packageName;
             String cls = ai.name;
-            String label = labels.get(which);
+            String label = sortedLabels.get(which);
 
             saveMapping(dayIndex, pkg, cls, label);
             loadLabels();

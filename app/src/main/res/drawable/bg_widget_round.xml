@@ -4,7 +4,8 @@
 
     <corners android:radius="16dp" />
 
-    <solid android:color="#E6222222" />
+    <!-- 默认完全透明，由样式配置控制实际背景颜色和透明度 -->
+    <solid android:color="@android:color/transparent" />
 
     <padding
         android:left="0dp"
