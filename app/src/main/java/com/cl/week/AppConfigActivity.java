@@ -9,9 +9,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,13 +43,13 @@ public class AppConfigActivity extends AppCompatActivity {
     private TextView[] labelViews = new TextView[7];
     private TextView tvStyleSummary;
 
-    private android.widget.EditText etBgColor;
-    private android.widget.EditText etTodayDateColor;
-    private android.widget.EditText etTodayWeekColor;
-    private android.widget.EditText etPastDateColor;
-    private android.widget.EditText etPastWeekColor;
-    private android.widget.EditText etFutureDateColor;
-    private android.widget.EditText etFutureWeekColor;
+    private View previewBg;
+    private View previewTodayDate;
+    private View previewTodayWeek;
+    private View previewPastDate;
+    private View previewPastWeek;
+    private View previewFutureDate;
+    private View previewFutureWeek;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class AppConfigActivity extends AppCompatActivity {
         initViews();
         loadLabels();
         loadStyleSummary();
-        loadCustomColorFields();
+        loadColorPreviews();
     }
 
     private void initViews() {
@@ -72,13 +73,13 @@ public class AppConfigActivity extends AppCompatActivity {
 
         tvStyleSummary = findViewById(R.id.tv_style_summary);
 
-        etBgColor = findViewById(R.id.et_bg_color);
-        etTodayDateColor = findViewById(R.id.et_today_date_color);
-        etTodayWeekColor = findViewById(R.id.et_today_week_color);
-        etPastDateColor = findViewById(R.id.et_past_date_color);
-        etPastWeekColor = findViewById(R.id.et_past_week_color);
-        etFutureDateColor = findViewById(R.id.et_future_date_color);
-        etFutureWeekColor = findViewById(R.id.et_future_week_color);
+        previewBg = findViewById(R.id.view_bg_color);
+        previewTodayDate = findViewById(R.id.view_today_date_color);
+        previewTodayWeek = findViewById(R.id.view_today_week_color);
+        previewPastDate = findViewById(R.id.view_past_date_color);
+        previewPastWeek = findViewById(R.id.view_past_week_color);
+        previewFutureDate = findViewById(R.id.view_future_date_color);
+        previewFutureWeek = findViewById(R.id.view_future_week_color);
 
         int[] btnIds = {
                 R.id.btn_pick_mon,
@@ -102,8 +103,35 @@ public class AppConfigActivity extends AppCompatActivity {
         Button btnPickFont = findViewById(R.id.btn_pick_font);
         btnPickFont.setOnClickListener(v -> showFontPicker());
 
-        Button btnApplyCustom = findViewById(R.id.btn_apply_custom_style);
-        btnApplyCustom.setOnClickListener(v -> applyCustomStyle());
+        View.OnClickListener colorClickListener;
+
+        Button btnBgColor = findViewById(R.id.btn_bg_color);
+        btnBgColor.setOnClickListener(v -> showColorPicker(KEY_BG_COLOR, 0xE6222222, previewBg));
+        previewBg.setOnClickListener(v -> showColorPicker(KEY_BG_COLOR, 0xE6222222, previewBg));
+
+        Button btnTodayDateColor = findViewById(R.id.btn_today_date_color);
+        btnTodayDateColor.setOnClickListener(v -> showColorPicker(KEY_TODAY_DATE_COLOR, 0xFFFFFFFF, previewTodayDate));
+        previewTodayDate.setOnClickListener(v -> showColorPicker(KEY_TODAY_DATE_COLOR, 0xFFFFFFFF, previewTodayDate));
+
+        Button btnTodayWeekColor = findViewById(R.id.btn_today_week_color);
+        btnTodayWeekColor.setOnClickListener(v -> showColorPicker(KEY_TODAY_WEEK_COLOR, 0xFFFFFFFF, previewTodayWeek));
+        previewTodayWeek.setOnClickListener(v -> showColorPicker(KEY_TODAY_WEEK_COLOR, 0xFFFFFFFF, previewTodayWeek));
+
+        Button btnPastDateColor = findViewById(R.id.btn_past_date_color);
+        btnPastDateColor.setOnClickListener(v -> showColorPicker(KEY_PAST_DATE_COLOR, 0x99FFFFFF, previewPastDate));
+        previewPastDate.setOnClickListener(v -> showColorPicker(KEY_PAST_DATE_COLOR, 0x99FFFFFF, previewPastDate));
+
+        Button btnPastWeekColor = findViewById(R.id.btn_past_week_color);
+        btnPastWeekColor.setOnClickListener(v -> showColorPicker(KEY_PAST_WEEK_COLOR, 0x66FFFFFF, previewPastWeek));
+        previewPastWeek.setOnClickListener(v -> showColorPicker(KEY_PAST_WEEK_COLOR, 0x66FFFFFF, previewPastWeek));
+
+        Button btnFutureDateColor = findViewById(R.id.btn_future_date_color);
+        btnFutureDateColor.setOnClickListener(v -> showColorPicker(KEY_FUTURE_DATE_COLOR, 0xCCFFFFFF, previewFutureDate));
+        previewFutureDate.setOnClickListener(v -> showColorPicker(KEY_FUTURE_DATE_COLOR, 0xCCFFFFFF, previewFutureDate));
+
+        Button btnFutureWeekColor = findViewById(R.id.btn_future_week_color);
+        btnFutureWeekColor.setOnClickListener(v -> showColorPicker(KEY_FUTURE_WEEK_COLOR, 0x99FFFFFF, previewFutureWeek));
+        previewFutureWeek.setOnClickListener(v -> showColorPicker(KEY_FUTURE_WEEK_COLOR, 0x99FFFFFF, previewFutureWeek));
 
         Button btnDone = findViewById(R.id.btn_done);
         btnDone.setOnClickListener(v -> {
@@ -144,16 +172,16 @@ public class AppConfigActivity extends AppCompatActivity {
         tvStyleSummary.setText("当前样式：" + styleText + "，字体：" + fontText);
     }
 
-    private void loadCustomColorFields() {
+    private void loadColorPreviews() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        etBgColor.setText(colorToHex(prefs.getInt(KEY_BG_COLOR, 0xE6222222)));
-        etTodayDateColor.setText(colorToHex(prefs.getInt(KEY_TODAY_DATE_COLOR, 0xFFFFFFFF)));
-        etTodayWeekColor.setText(colorToHex(prefs.getInt(KEY_TODAY_WEEK_COLOR, 0xFFFFFFFF)));
-        etPastDateColor.setText(colorToHex(prefs.getInt(KEY_PAST_DATE_COLOR, 0x99FFFFFF)));
-        etPastWeekColor.setText(colorToHex(prefs.getInt(KEY_PAST_WEEK_COLOR, 0x66FFFFFF)));
-        etFutureDateColor.setText(colorToHex(prefs.getInt(KEY_FUTURE_DATE_COLOR, 0xCCFFFFFF)));
-        etFutureWeekColor.setText(colorToHex(prefs.getInt(KEY_FUTURE_WEEK_COLOR, 0x99FFFFFF)));
+        setPreviewColor(previewBg, prefs.getInt(KEY_BG_COLOR, 0xE6222222));
+        setPreviewColor(previewTodayDate, prefs.getInt(KEY_TODAY_DATE_COLOR, 0xFFFFFFFF));
+        setPreviewColor(previewTodayWeek, prefs.getInt(KEY_TODAY_WEEK_COLOR, 0xFFFFFFFF));
+        setPreviewColor(previewPastDate, prefs.getInt(KEY_PAST_DATE_COLOR, 0x99FFFFFF));
+        setPreviewColor(previewPastWeek, prefs.getInt(KEY_PAST_WEEK_COLOR, 0x66FFFFFF));
+        setPreviewColor(previewFutureDate, prefs.getInt(KEY_FUTURE_DATE_COLOR, 0xCCFFFFFF));
+        setPreviewColor(previewFutureWeek, prefs.getInt(KEY_FUTURE_WEEK_COLOR, 0x99FFFFFF));
     }
 
     private void showAppPicker(int dayIndex) {
@@ -251,44 +279,96 @@ public class AppConfigActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void applyCustomStyle() {
-        int bg = parseColor(etBgColor.getText().toString(), 0xE6222222);
-        int todayDate = parseColor(etTodayDateColor.getText().toString(), 0xFFFFFFFF);
-        int todayWeek = parseColor(etTodayWeekColor.getText().toString(), 0xFFFFFFFF);
-        int pastDate = parseColor(etPastDateColor.getText().toString(), 0x99FFFFFF);
-        int pastWeek = parseColor(etPastWeekColor.getText().toString(), 0x66FFFFFF);
-        int futureDate = parseColor(etFutureDateColor.getText().toString(), 0xCCFFFFFF);
-        int futureWeek = parseColor(etFutureWeekColor.getText().toString(), 0x99FFFFFF);
-
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefs.edit()
-                .putInt(KEY_STYLE_INDEX, 5)
-                .putInt(KEY_BG_COLOR, bg)
-                .putInt(KEY_TODAY_DATE_COLOR, todayDate)
-                .putInt(KEY_TODAY_WEEK_COLOR, todayWeek)
-                .putInt(KEY_PAST_DATE_COLOR, pastDate)
-                .putInt(KEY_PAST_WEEK_COLOR, pastWeek)
-                .putInt(KEY_FUTURE_DATE_COLOR, futureDate)
-                .putInt(KEY_FUTURE_WEEK_COLOR, futureWeek)
-                .apply();
-
-        loadStyleSummary();
-        updateAllWidgets();
-    }
-
-    private String colorToHex(int color) {
-        return String.format("#%08X", color);
-    }
-
-    private int parseColor(String text, int defaultColor) {
-        if (text == null) return defaultColor;
-        text = text.trim();
-        if (text.isEmpty()) return defaultColor;
-        try {
-            return android.graphics.Color.parseColor(text);
-        } catch (IllegalArgumentException e) {
-            return defaultColor;
+    private void setPreviewColor(View view, int color) {
+        if (view != null) {
+            view.setBackgroundColor(color);
         }
+    }
+
+    private void showColorPicker(String key, int defaultColor, View preview) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        int currentColor = prefs.getInt(key, defaultColor);
+
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_color_picker, null, false);
+        View previewView = dialogView.findViewById(R.id.view_color_preview);
+        android.widget.SeekBar seekR = dialogView.findViewById(R.id.seek_r);
+        android.widget.SeekBar seekG = dialogView.findViewById(R.id.seek_g);
+        android.widget.SeekBar seekB = dialogView.findViewById(R.id.seek_b);
+        android.widget.SeekBar seekA = dialogView.findViewById(R.id.seek_a);
+        TextView tvR = dialogView.findViewById(R.id.tv_r_value);
+        TextView tvG = dialogView.findViewById(R.id.tv_g_value);
+        TextView tvB = dialogView.findViewById(R.id.tv_b_value);
+        TextView tvA = dialogView.findViewById(R.id.tv_a_value);
+
+        int a = (currentColor >> 24) & 0xFF;
+        int r = (currentColor >> 16) & 0xFF;
+        int g = (currentColor >> 8) & 0xFF;
+        int b = (currentColor) & 0xFF;
+
+        seekA.setMax(100);
+        seekR.setMax(255);
+        seekG.setMax(255);
+        seekB.setMax(255);
+
+        seekA.setProgress((int) (a / 255f * 100));
+        seekR.setProgress(r);
+        seekG.setProgress(g);
+        seekB.setProgress(b);
+
+        tvA.setText(String.valueOf(seekA.getProgress()));
+        tvR.setText(String.valueOf(r));
+        tvG.setText(String.valueOf(g));
+        tvB.setText(String.valueOf(b));
+
+        final int[] colorHolder = new int[1];
+
+        android.widget.SeekBar.OnSeekBarChangeListener listener = new android.widget.SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
+                int alpha = (int) (seekA.getProgress() / 100f * 255);
+                int red = seekR.getProgress();
+                int green = seekG.getProgress();
+                int blue = seekB.getProgress();
+
+                colorHolder[0] = android.graphics.Color.argb(alpha, red, green, blue);
+                previewView.setBackgroundColor(colorHolder[0]);
+
+                tvA.setText(String.valueOf(seekA.getProgress()));
+                tvR.setText(String.valueOf(red));
+                tvG.setText(String.valueOf(green));
+                tvB.setText(String.valueOf(blue));
+            }
+
+            @Override
+            public void onStartTrackingTouch(android.widget.SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(android.widget.SeekBar seekBar) {}
+        };
+
+        seekA.setOnSeekBarChangeListener(listener);
+        seekR.setOnSeekBarChangeListener(listener);
+        seekG.setOnSeekBarChangeListener(listener);
+        seekB.setOnSeekBarChangeListener(listener);
+
+        // Initialize preview color
+        listener.onProgressChanged(seekA, seekA.getProgress(), false);
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("选择颜色和透明度");
+        builder.setView(dialogView);
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            int chosenColor = colorHolder[0];
+            prefs.edit()
+                    .putInt(KEY_STYLE_INDEX, 5)
+                    .putInt(key, chosenColor)
+                    .apply();
+            setPreviewColor(preview, chosenColor);
+            loadStyleSummary();
+            updateAllWidgets();
+        });
+        builder.setNegativeButton("取消", null);
+        builder.show();
     }
 
     private void saveMapping(int dayIndex, String pkg, String cls, String label) {
